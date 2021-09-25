@@ -69,15 +69,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _num1 = _randomInt();
-    _num2 = _randomInt();
+    _num1 = _randomIntNum1();
+    _num2 = _randomIntNum2(_num1);
     _newRound();
   }
 
   void _newRound() {
     setState(() {
-      _num1 = _randomInt();
-      _num2 = _randomInt();
+      _num1 = _randomIntNum1();
+      _num2 = _randomIntNum2(_num1);
       _numSum = _addingTwoDigits(_num1, _num2);
       _displayAnswer = false;
     });
@@ -87,8 +87,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return a + b;
   }
 
-  int _randomInt() {
-    return randomInt.nextInt(10);
+  int _randomIntNum1() {
+    return randomInt.nextInt(8) + 1;
+  }
+
+  int _randomIntNum2(int firstNum) {
+    return randomInt.nextInt(10 - firstNum) + 1;
   }
 
   @override
@@ -150,10 +154,13 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FloatingActionButton(
-            onPressed: _incrementCounter,
-            tooltip: 'Adds Up Two Numbers',
-            child: const Icon(Icons.add),
+          Container(
+            child: FloatingActionButton(
+              onPressed: _incrementCounter,
+              tooltip: 'Adds Up Two Numbers',
+              child: const Icon(Icons.add),
+            ),
+            padding: const EdgeInsets.all(10),
           ),
           FloatingActionButton(
             onPressed: _newRound,
